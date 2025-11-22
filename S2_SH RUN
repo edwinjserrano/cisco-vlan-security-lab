@@ -1,0 +1,242 @@
+S2#sh run
+Building configuration...
+
+Current configuration : 4740 bytes
+!
+version 15.0
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+service password-encryption
+!
+hostname S2
+!
+enable secret 5 $1$mERr$EJnmB234UvJf9yoQMWYJK/
+!
+!
+!
+ip ssh version 2
+no ip domain-lookup
+ip domain-name cisco.com
+!
+username admin secret 5 $1$mERr$T1S97utRI1860OFruN7tt1
+!
+ip arp inspection vlan 20,30,60,101
+!
+ip dhcp snooping vlan 20,30,60,101
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+interface FastEthernet0/1
+ switchport access vlan 20
+ switchport mode access
+ switchport nonegotiate
+ switchport voice vlan 60
+ switchport port-security maximum 2
+ switchport port-security mac-address sticky 
+ switchport port-security violation restrict 
+ switchport port-security aging time 50
+ no cdp enable
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+!
+interface FastEthernet0/2
+ switchport access vlan 30
+ switchport mode access
+ switchport nonegotiate
+ switchport voice vlan 60
+ switchport port-security maximum 2
+ switchport port-security mac-address sticky 
+ switchport port-security violation restrict 
+ switchport port-security aging time 50
+ spanning-tree portfast
+ spanning-tree bpduguard enable
+ mls qos trust cos
+!
+interface FastEthernet0/3
+ description PORTS SHUT
+ switchport access vlan 1000
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/4
+ description PORTS SHUT
+ switchport access vlan 1000
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/5
+ description PORTS SHUT
+ switchport access vlan 1000
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/6
+ description PORTS SHUT
+ switchport access vlan 1000
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/7
+ description PORTS SHUT
+ switchport access vlan 1000
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/8
+ description PORTS SHUT
+ switchport access vlan 1000
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/9
+ description PORTS SHUT
+ switchport access vlan 1000
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/10
+ description PORTS SHUT
+ switchport access vlan 1000
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/11
+ description PORTS SHUT
+ switchport access vlan 1000
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/12
+ description PORTS SHUT
+ switchport access vlan 1000
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/13
+ description PORTS SHUT
+ switchport access vlan 1000
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/14
+ description PORTS SHUT
+ switchport access vlan 1000
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/15
+ description PORTS SHUT
+ switchport access vlan 1000
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/16
+ description PORTS SHUT
+ switchport access vlan 1000
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/17
+ description PORTS SHUT
+ switchport access vlan 1000
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/18
+ description PORTS SHUT
+ switchport access vlan 1000
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/19
+ description PORTS SHUT
+ switchport access vlan 1000
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/20
+ description PORTS SHUT
+ switchport access vlan 1000
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/21
+ description PORTS SHUT
+ switchport access vlan 1000
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/22
+ description PORTS SHUT
+ switchport access vlan 1000
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/23
+ description PORTS SHUT
+ switchport access vlan 1000
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/24
+ description PORTS SHUT
+ switchport access vlan 1000
+ switchport mode access
+ shutdown
+!
+interface GigabitEthernet0/1
+ description LINK TRUNK
+ switchport trunk native vlan 101
+ switchport trunk allowed vlan 20,30,60,101
+ ip arp inspection trust
+ ip dhcp snooping trust
+ switchport mode trunk
+ switchport nonegotiate
+!
+interface GigabitEthernet0/2
+ description PORTS SHUT
+ switchport access vlan 1000
+ switchport mode access
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan101
+ description VLAN 100 MANAGEMENT
+ ip address 10.10.10.6 255.255.255.252
+!
+ip default-gateway 10.10.10.5
+!
+banner motd ^C ACCESO RESTRINGIDO ^C
+!
+!
+!
+ip access-list extended SSH
+ permit tcp 192.168.6.0 0.0.0.255 any eq 22
+ permit tcp 192.168.6.0 0.0.0.255 any established
+ deny tcp any any eq 22
+ deny ip any any
+line con 0
+ password 7 0822455D0A1606181C1B0D1739
+ logging synchronous
+ login
+ exec-timeout 5 0
+!
+line vty 0 4
+ access-class SSH in
+ exec-timeout 5 0
+ login local
+ transport input ssh
+line vty 5 15
+ access-class SSH in
+ exec-timeout 5 0
+ login local
+ transport input ssh
+!
+!
+!
+!
+end
